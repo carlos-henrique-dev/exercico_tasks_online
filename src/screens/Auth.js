@@ -9,7 +9,7 @@ import {
     Alert
 } from 'react-native'
 import commonStyles from '../commonStyles'
-import backgroundImage from '../../assets/imgs/Login.jpg'
+import backgroundImage from '../../assets/imgs/login.jpg'
 
 export default class Auth extends Component {
     state = {
@@ -53,7 +53,7 @@ export default class Auth extends Component {
                             placeholder='Nome'
                             style={styles.input}
                             value={this.state.name}
-                            onChangeText={name = this.setState({ name })} />}
+                            onChangeText={name => this.setState({ name })} />}
                     {/* esse é o input do email e depois o de senha. 
                     eles sempre estão presentes então não precisam de condicional */}
                     <TextInput
@@ -97,5 +97,41 @@ export default class Auth extends Component {
 }
 
 const styles = StyleSheet.create({
-
+    background: {
+        flex: 1,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    title: {
+        fontFamily: commonStyles.fontFamily,
+        color: '#FFF',
+        fontSize: 70,
+        marginBottom: 10,
+    },
+    subtitle: {
+        fontFamily: commonStyles.fontFamily,
+        color: '#FFF',
+        fontSize: 20,
+    },
+    formContainer: {
+        backgroundColor: 'rgba(0,0,0,0.8)',
+        padding: 20,
+        width: '90%',
+    },
+    input: {
+        marginTop: 10,
+        backgroundColor: '#FFF',
+    },
+    button: {
+        backgroundColor: '#080',
+        marginTop: 10,
+        padding: 10,
+        alignItems: 'center',
+    },
+    buttonText: {
+        fontFamily: commonStyles.fontFamily,
+        color: '#FFF',
+        fontSize: 20,
+    }
 })
