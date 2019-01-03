@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import {
     StyleSheet,
     Text,
-    TextInput,
     View,
     ImageBackground,
     TouchableOpacity,
     Alert
 } from 'react-native'
+import axios from 'axios'
+import { server, showError } from '../common'
 import commonStyles from '../commonStyles'
 import backgroundImage from '../../assets/imgs/login.jpg'
 import Authinput from '../components/Authinput'
@@ -23,11 +24,38 @@ export default class Auth extends Component {
         confirmPassword: '',
     }
 
-    signinOrSignup = () => {
+    signinOrSignup = async () => {
         if (this.state.stageNew) {
-            Alert.alert('Sucesso!', 'Criar conta')
+            try {
+                await axios.post(`${server}/signup`, {
+                    name: this.state.name,
+                    email: this.state.email,
+                    password: this.state.password,
+                    confirmPassword: this.state.confirmPassword,
+                })
+                Alert.alert('Sucesso', 'Usuário cadastrado com sucesso!')
+                this.setState({ stageNew: false })
+            } catch (err) {
+                showError(err)
+            }
         } else {
-            Alert.alert('Sucesso', 'Logar')
+            try {
+                const res = await axios.post(`${server}/signin`, {
+                    email: this.state.email,
+                    password: this.state.password,
+
+                })
+                /* a partir de agora, todas as requisições usando o axios
+                terão esse header abaixo, pois dessa forma é possível autenticar as requisições
+                e confirmar se o usuário pode ou não realizar determinada ação. */
+                axios.defaults.headers.common['Authorization'] = `bearer ${res.data.token}`
+                /* dando tudo certo, eu chamo a classe anterior e falo pra mudar
+                pra tela Home */
+                this.props.navigation.navigate('Home')
+            } catch (err) {
+                Alert.alert('Erro', 'Falha no login!')
+                //showError(err)
+            }
         }
     }
 
@@ -65,6 +93,7 @@ export default class Auth extends Component {
                         value={this.state.email}
                         onChangeText={email => this.setState({ email })}
                     />
+                    
                     <Authinput
                         icon='lock'
                         secureTextEntry={true}
@@ -83,10 +112,11 @@ export default class Auth extends Component {
                             style={styles.input}
                             value={this.state.confirmPassword}
                             onChangeText={confirmPassword => this.setState({ confirmPassword })} />}
+                    
                     <TouchableOpacity onPress={this.signinOrSignup}>
                         <View style={styles.button}>
                             <Text style={styles.buttonText}>
-                                {this.state.stageNew ? 'Regristrar' : 'Entrar'}
+                                {this.state.stageNew ? 'Registrar' : 'Entrar'}
                             </Text>
                         </View>
                     </TouchableOpacity>
