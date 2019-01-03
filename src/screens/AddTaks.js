@@ -15,13 +15,20 @@ import {
 import moment from 'moment'
 import commonStyles from '../commonStyles'
 
-const initialState = {
-    desc: '',
-    date: new Date()
-}
+
 
 export default class AddTask extends Component {
-    state = { ...initialState }
+    constructor(props) {
+        super(props)
+        this.state = this.getInitialState()
+    }
+
+    getInitialState = () => {
+        return {
+            desc: '',
+            date: new Date()
+        }
+    }
 
     save = () => {
         if (!this.state.desc.trim()) { //trim tira os espaço em branco da string e garante que tem dados válidos no input
@@ -30,7 +37,6 @@ export default class AddTask extends Component {
         }
         const data = { ...this.state }
         this.props.onSave(data)
-        this.setState({ ...initialState })
     }
 
     handlerDateAndroidChanged = () => {
@@ -71,6 +77,7 @@ export default class AddTask extends Component {
                 visible={this.props.isVisible}
                 animationType='slide'
                 transparent={true}
+                onShow={() => this.setState({ ... this.getInitialState() })}
             >
                 <TouchableWithoutFeedback onPress={this.props.onCancel}>
                     <View style={styles.offset}></View>
