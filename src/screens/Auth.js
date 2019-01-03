@@ -10,6 +10,7 @@ import {
 } from 'react-native'
 import commonStyles from '../commonStyles'
 import backgroundImage from '../../assets/imgs/login.jpg'
+import Authinput from '../components/Authinput'
 
 export default class Auth extends Component {
     state = {
@@ -49,20 +50,24 @@ export default class Auth extends Component {
                     se for true, ele renderiza o textInput do nome
                     aqui ele usa essa operação pq pode precisar do input do nome ou não */}
                     {this.state.stageNew &&
-                        <TextInput
+                        <Authinput
+                            icon='user'
                             placeholder='Nome'
                             style={styles.input}
                             value={this.state.name}
                             onChangeText={name => this.setState({ name })} />}
                     {/* esse é o input do email e depois o de senha. 
                     eles sempre estão presentes então não precisam de condicional */}
-                    <TextInput
+                    <Authinput
+                        icon='at'
                         placeholder='E-mail'
                         style={styles.input}
                         value={this.state.email}
                         onChangeText={email => this.setState({ email })}
                     />
-                    <TextInput
+                    <Authinput
+                        icon='lock'
+                        secureTextEntry={true}
                         placeholder='Senha'
                         style={styles.input}
                         value={this.state.password}
@@ -71,7 +76,9 @@ export default class Auth extends Component {
                     {/* agora outra renderização condicional. agora para a confirmação
                     da senha na hora do cadastro */}
                     {this.state.stageNew &&
-                        <TextInput
+                        <Authinput
+                            icon='asterisk'
+                            secureTextEntry={true}
                             placeholder='Confirme a senha'
                             style={styles.input}
                             value={this.state.confirmPassword}
