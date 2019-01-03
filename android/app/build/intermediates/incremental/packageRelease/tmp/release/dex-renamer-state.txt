@@ -1,0 +1,4 @@
+#Thu Dec 27 15:07:39 AMST 2018
+base.0=/media/henrique/7F6AA2C13FF43A87/Curso React Native/Leonardo Leitão/tasks2/android/app/build/intermediates/transforms/dexMerger/release/0
+path.0=classes.dex
+renamed.0=classes.dex
