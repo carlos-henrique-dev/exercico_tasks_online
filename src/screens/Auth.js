@@ -5,7 +5,8 @@ import {
     View,
     ImageBackground,
     TouchableOpacity,
-    Alert
+    Alert,
+    AsyncStorage
 } from 'react-native'
 import axios from 'axios'
 import { server, showError } from '../common'
@@ -35,6 +36,7 @@ export default class Auth extends Component {
             terão esse header abaixo, pois dessa forma é possível autenticar as requisições
             e confirmar se o usuário pode ou não realizar determinada ação. */
             axios.defaults.headers.common['Authorization'] = `bearer ${res.data.token}`
+            AsyncStorage.setItem('userData', JSON.stringify(res.data))
             /* dando tudo certo, eu chamo a classe anterior e falo pra mudar
             pra tela Home */
             this.props.navigation.navigate('Home', res.data)
