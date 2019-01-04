@@ -37,7 +37,7 @@ export default class Auth extends Component {
             axios.defaults.headers.common['Authorization'] = `bearer ${res.data.token}`
             /* dando tudo certo, eu chamo a classe anterior e falo pra mudar
             pra tela Home */
-            this.props.navigation.navigate('Home')
+            this.props.navigation.navigate('Home', res.data)
         } catch (err) {
             Alert.alert('Erro', 'Falha no login!')
             //showError(err)
